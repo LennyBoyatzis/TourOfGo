@@ -5,23 +5,19 @@ package main
 import "fmt"
 
 func main() {
-  n := 3
-  in := make(chan int)
-  out := make(chan int)
+	n := 3
+	in := make(chan int)
+	out := make(chan int)
 
-  go multiplyByTwo(in, out)
+	go multiplyByTwo(in, out)
 
-  in <- n
-  fmt.Println("What is happening here?")
-  output := <-out
-  fmt.Println("here is the output", output)
+	in <- n
+	output := <-out
 }
 
 func multiplyByTwo(in <-chan int, out chan<- int) {
-  fmt.Println("Initializing goroutine...")
+	num := <-in
 
-  num := <-in
-
-  result := num * 2
-  out <- result
+	result := num * 2
+	out <- result
 }
